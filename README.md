@@ -1,11 +1,5 @@
-Sarah Ransohoff's front end code submission.
-
 ##To run
-Open index.html in Chrome.
-
-##Notes
-- After speaking with Naz, I decided to use ES6 (without a transpiler) because [most browsers can handle it.](http://kangax.github.io/compat-table/es6/)
-- I tested this in the latest version of Chrome.
+Open index.html in Chrome (won't work in other browsers because input-datetime isn't compatible).
 
 ##To improve / do next
 - [input time](http://caniuse.com/#feat=input-datetime) isn't widely supported, so we should replace it with something that is (I used it for ease of implementation)

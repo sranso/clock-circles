@@ -29,7 +29,6 @@ const state = {
 };
 
 const startApp = () => {
-  // immediately set clock and draw circles
   updateCurrentTime();
   draw();
 
@@ -39,7 +38,9 @@ const startApp = () => {
 };
 
 const formatTime = (hours, minutes, seconds, amPm) => {
-  if (hours > 12) { // edge case: midnight; destructure
+  if (hours === 0) {
+    hours = 12;
+  } else if (hours > 12) {
     hours = hours - 12;
   }
   const formattedUnits = [hours, minutes, seconds].map(unit => {
@@ -54,48 +55,46 @@ const formatTime = (hours, minutes, seconds, amPm) => {
 };
 
 const updateCurrentTime = () => {
-  const stateTime = state.time;
-  stateTime.time = new Date();
-  stateTime.hours = stateTime.time.getHours();
-  stateTime.minutes = stateTime.time.getMinutes();
-  stateTime.seconds = stateTime.time.getSeconds();
-  stateTime.amPm = stateTime.hours > 11 ? 'PM' : 'AM';
-  stateTime.formatted = formatTime(stateTime.hours,
-                                   stateTime.minutes,
-                                   stateTime.seconds,
-                                   stateTime.amPm);
+  const { time } = state;
+  time.time = new Date();
+  time.hours = time.time.getHours();
+  time.minutes = time.time.getMinutes();
+  time.seconds = time.time.getSeconds();
+  time.amPm = time.hours > 11 ? 'PM' : 'AM';
+  time.formatted = formatTime(time.hours,
+                              time.minutes,
+                              time.seconds,
+                              time.amPm);
 
-  stateTime.$el.innerHTML = stateTime.formatted;
+  time.$el.innerHTML = time.formatted;
 };
 
 const checkAlarm = () => {
-  const stateAlarm = state.alarm;
-  const stateTime = state.time;
-  const alarmValue = stateAlarm.$el.value;
-  if (!alarmValue.length) {
+  const { alarm, time } = state;
+  if (!alarm.$el.value.length) {
     return;
   }
-  stateAlarm.hours = parseInt(alarmValue.slice(0, 2), 10);
-  stateAlarm.minutes = parseInt(alarmValue.slice(3));
+  alarm.hours = parseInt(alarm.$el.value.slice(0, 2), 10);
+  alarm.minutes = parseInt(alarm.$el.value.slice(3));
 
-  if (stateAlarm.minutes === stateTime.minutes && stateAlarm.hours === stateTime.hours) {
-    stateAlarm.shouldGoOff = true;
+  if (alarm.minutes === time.minutes && alarm.hours === time.hours) {
+    alarm.shouldGoOff = true;
   } else {
-    stateAlarm.shouldGoOff = false;
+    alarm.shouldGoOff = false;
   }
 };
 
 const draw = () => {
-  const stateCanvas = state.canvas;
-  if (!stateCanvas.$el.getContext) {
+  const { canvas } = state;
+  if (!canvas.$el.getContext) {
     throw new Error('This browser does not support canvas')
   }
 
   const resizeCanvas = () => {
     const spaceForTimeAndAlarm = 250;
     const heightAndWidth = Math.min(window.innerHeight, window.innerWidth) - spaceForTimeAndAlarm;
-    stateCanvas.$el.width = heightAndWidth;
-    stateCanvas.$el.height = heightAndWidth;
+    canvas.$el.width = heightAndWidth;
+    canvas.$el.height = heightAndWidth;
 
     drawCircles();
   }
@@ -105,18 +104,13 @@ const draw = () => {
 };
 
 const drawCircles = () => {
-  const $canvas = state.canvas.$el;
-  const ctx = $canvas.getContext('2d');
-  ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+  const { canvas: { $el }, time: { hours, minutes, seconds } } = state;
+  const ctx = $el.getContext('2d');
+  ctx.clearRect(0, 0, $el.width, $el.height);
 
   const HOURS_RADIUS_MIN = 120;
   const MINUTES_RADIUS_MIN = 60;
   const SECONDS_RADIUS_MIN = 0;
-
-  const currentTime = state.time.$el.innerText;
-  const hours = parseInt(currentTime.slice(0,2), 10);
-  const minutes = parseInt(currentTime.slice(3,5), 10);
-  const seconds = parseInt(currentTime.slice(6,8), 10);
 
   const hoursRadius = hours + HOURS_RADIUS_MIN;
   const minutesRadius = minutes + MINUTES_RADIUS_MIN;
@@ -128,11 +122,11 @@ const drawCircles = () => {
 };
 
 const drawCircle = (ctx, radius) => {
-  const stateCanvas = state.canvas;
-  const center = stateCanvas.$el.height / 2;
-  const colorStyle = state.alarm.shouldGoOff ? 'alarm' : state.time.amPm.toLowerCase();
-  const fillStyle = stateCanvas.fillStyle[colorStyle];
-  const strokeStyle = stateCanvas.strokeStyle[colorStyle];
+  const { canvas, alarm, time } = state;
+  const center = canvas.$el.height / 2;
+  const colorStyle = alarm.shouldGoOff ? 'alarm' : time.amPm.toLowerCase();
+  const fillStyle = canvas.fillStyle[colorStyle];
+  const strokeStyle = canvas.strokeStyle[colorStyle];
 
   ctx.beginPath();
   ctx.arc(center, center, radius, 0, Math.PI*2, true);
