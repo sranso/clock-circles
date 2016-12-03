@@ -1,0 +1,29 @@
+body {
+  font-family: monospace;
+  text-align: center;
+  font-size: 3rem;
+  color: #AAAAAA;
+}
+
+input {
+  font-size: inherit;
+  color: #AAAAAA;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+input[type=time]::-webkit-textfield-decoration-container,
+input[type=time]::-webkit-inner-spin-button,
+input[type=time]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+img {
+  height: 30px;
+  width: 30px;
+  opacity: .35;
+}
