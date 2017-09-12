@@ -82,21 +82,21 @@ const checkAlarm = () => {
 const draw = () => {
   const { canvas } = state;
   if (!canvas.$el.getContext) {
-    throw new Error('This browser does not support canvas')
-  }
-
-  const resizeCanvas = () => {
-    const spaceForTimeAndAlarm = 250;
-    const heightAndWidth = Math.min(window.innerHeight, window.innerWidth) - spaceForTimeAndAlarm;
-    canvas.$el.width = heightAndWidth;
-    canvas.$el.height = heightAndWidth;
-
-    drawCircles();
+    throw new Error('This browser does not support canvas.')
   }
   resizeCanvas();
-
   window.addEventListener('resize', resizeCanvas, false);
 };
+
+const resizeCanvas = () => {
+  const { canvas } = state;
+  const spaceForTimeAndAlarm = 250;
+  const heightAndWidth = Math.min(window.innerHeight, window.innerWidth) - spaceForTimeAndAlarm;
+  canvas.$el.width = heightAndWidth;
+  canvas.$el.height = heightAndWidth;
+
+  drawCircles();
+}
 
 const drawCircles = () => {
   const { canvas: { $el }, time: { hours, minutes, seconds } } = state;
