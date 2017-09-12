@@ -27,3 +27,7 @@ img {
   width: 30px;
   opacity: .35;
 }
+
+#current-time {
+  text-transform: uppercase;
+}

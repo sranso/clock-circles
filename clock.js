@@ -60,7 +60,7 @@ const updateCurrentTime = () => {
   time.hours = time.date.getHours();
   time.minutes = time.date.getMinutes();
   time.seconds = time.date.getSeconds();
-  time.amPm = time.hours > 11 ? 'PM' : 'AM';
+  time.amPm = time.hours > 11 ? 'pm' : 'am';
   time.formatted = formatTime(time.hours,
                               time.minutes,
                               time.seconds,
@@ -120,7 +120,7 @@ const drawCircles = () => {
 const drawCircle = (ctx, radius) => {
   const { canvas, alarm, time } = state;
   const center = canvas.$el.height / 2;
-  const colorStyle = alarm.shouldGoOff ? 'alarm' : time.amPm.toLowerCase();
+  const colorStyle = alarm.shouldGoOff ? 'alarm' : time.amPm;
   const fillStyle = canvas.fillStyle[colorStyle];
   const strokeStyle = canvas.strokeStyle[colorStyle];
 
