@@ -103,9 +103,10 @@ const drawCircles = () => {
   const ctx = $el.getContext('2d');
   ctx.clearRect(0, 0, $el.width, $el.height);
 
-  const HOURS_RADIUS_MIN = 120;
-  const MINUTES_RADIUS_MIN = 60;
-  const SECONDS_RADIUS_MIN = 0;
+  const CENTER_PADDING = 1;
+  const HOURS_RADIUS_MIN = 120 + CENTER_PADDING;
+  const MINUTES_RADIUS_MIN = 60 + CENTER_PADDING;
+  const SECONDS_RADIUS_MIN = 0 + CENTER_PADDING;
 
   const hoursRadius = hours + HOURS_RADIUS_MIN;
   const minutesRadius = minutes + MINUTES_RADIUS_MIN;
