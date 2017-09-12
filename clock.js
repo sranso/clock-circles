@@ -60,7 +60,7 @@ const updateCurrentTime = () => {
   time.hours = time.date.getHours();
   time.minutes = time.date.getMinutes();
   time.seconds = time.date.getSeconds();
-  time.amPm = time.hours > 11 ? 'pm' : 'am';
+  time.amPm = (time.hours > 11 && time.hours < 24) ? 'pm' : 'am';
   time.formatted = formatTime(time.hours,
                               time.minutes,
                               time.seconds,
