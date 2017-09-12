@@ -10,4 +10,5 @@ Open index.html in Chrome (won't work in other browsers because input-datetime i
 - Reduce the size of the original alarm clock svg (or replace with a mini canvas drawing)
 - Allow the user to turn off the alarm
 - Add tests
+- Add type checking (flow?)
 

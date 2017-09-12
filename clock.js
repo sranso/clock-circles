@@ -7,7 +7,7 @@ const state = {
   },
   time: {
     $el: document.getElementById('current-time'),
-    time: 0,
+    date: {},
     hours: 0,
     minutes: 0,
     seconds: 0,
@@ -56,10 +56,10 @@ const formatTime = (hours, minutes, seconds, amPm) => {
 
 const updateCurrentTime = () => {
   const { time } = state;
-  time.time = new Date();
-  time.hours = time.time.getHours();
-  time.minutes = time.time.getMinutes();
-  time.seconds = time.time.getSeconds();
+  time.date = new Date();
+  time.hours = time.date.getHours();
+  time.minutes = time.date.getMinutes();
+  time.seconds = time.date.getSeconds();
   time.amPm = time.hours > 11 ? 'PM' : 'AM';
   time.formatted = formatTime(time.hours,
                               time.minutes,
@@ -75,13 +75,8 @@ const checkAlarm = () => {
     return;
   }
   alarm.hours = parseInt(alarm.$el.value.slice(0, 2), 10);
-  alarm.minutes = parseInt(alarm.$el.value.slice(3));
-
-  if (alarm.minutes === time.minutes && alarm.hours === time.hours) {
-    alarm.shouldGoOff = true;
-  } else {
-    alarm.shouldGoOff = false;
-  }
+  alarm.minutes = parseInt(alarm.$el.value.slice(3), 10);
+  alarm.shouldGoOff = alarm.minutes === time.minutes && alarm.hours === time.hours;
 };
 
 const draw = () => {
