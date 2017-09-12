@@ -120,9 +120,9 @@ const drawCircles = () => {
 const drawCircle = (ctx, radius) => {
   const { canvas, alarm, time } = state;
   const center = canvas.$el.height / 2;
-  const colorStyle = alarm.shouldGoOff ? 'alarm' : time.amPm;
-  const fillStyle = canvas.fillStyle[colorStyle];
-  const strokeStyle = canvas.strokeStyle[colorStyle];
+  const color = alarm.shouldGoOff ? 'alarm' : time.amPm;
+  const fillStyle = canvas.fillStyle[color];
+  const strokeStyle = canvas.strokeStyle[color];
 
   ctx.beginPath();
   ctx.arc(center, center, radius, 0, Math.PI*2, true);
