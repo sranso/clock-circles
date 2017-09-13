@@ -1,5 +1,5 @@
 ### To run
-Open index.html in Chrome (won't work in other browsers because input-datetime isn't compatible).
+Open index.html in Chrome (it currently doesn't work in other browsers because input-time isn't compatible).
 
 ### To improve / do next
 - [input time](http://caniuse.com/#feat=input-datetime) isn't widely supported, so we should replace it with something that is (I used it for ease of implementation)
